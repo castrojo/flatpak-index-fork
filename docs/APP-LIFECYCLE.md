@@ -95,13 +95,14 @@ Retirement therefore needs a coordinated, reviewed production change.
 
 ## Respond to a bad publication
 
-A publication is bad when the served remote stops matching the registry or the
-documented catalog: a drift check fails, `enrich-index.py --check` reports
-missing or wrong metadata, or a user reports `Nothing matches` for an app that
-should be served. Roll back to the last known-good served index.
+A publication is bad when the served remote no longer matches the registry or
+the documented catalog. Find it three ways: a drift check fails,
+`enrich-index.py --check` reports missing or wrong metadata, or a user reports
+`Nothing matches` for an app the remote should serve. Roll back to the last
+known-good served index.
 
-Production is served from `tuna-os/docs` by the `tunaos-org` Cloudflare Worker,
-so a rollback is a change to that repository, not this one. This checkout's
+The `tunaos-org` Cloudflare Worker serves the production remote from `tuna-os/docs`, so a
+rollback is a change to that repository, not this one. This checkout's
 `index/static` is a reference snapshot and may itself be stale; do not treat it
 as the recovery source.
 
@@ -133,9 +134,9 @@ as the recovery source.
    restored, the date, and the owner.
 
 The incident owner is the production-source owner named by the governance
-decision in ROADMAP.md. Until then, any `tuna-os/docs` maintainer holding
-`FLATPAK_INDEX_TOKEN` may perform the rollback. Run this procedure as a live
-exercise at least once: a rollback that has never been exercised is not one.
+decision in ROADMAP.md. Until then, any `tuna-os/docs` maintainer with
+`FLATPAK_INDEX_TOKEN` may do the rollback. Run this procedure as a live
+exercise at least once. A rollback nobody has exercised is not one.
 
 ## Checks
 
