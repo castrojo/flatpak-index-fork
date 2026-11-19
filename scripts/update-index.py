@@ -21,8 +21,8 @@ with two independent implementations (update-index.py must stay a single file,
 so it cannot import oci.py), and tests/test_label_policy.py asserts the two
 copies agree -- a divergence fails there, not as a silent publish/audit mismatch.
 
-AppStream metadata is missing by default: without --require-appstream a build
-with no metainfo writes an incomplete entry and warns. Pass --require-appstream
+--require-appstream is off by default: without it a build with no metainfo
+writes an incomplete entry and warns. Pass --require-appstream
 to fail instead, so a build must ship metainfo before it is published at all.
 """
 

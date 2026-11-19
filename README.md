@@ -316,7 +316,7 @@ flatpak build-bundle --oci
 update-index.py        publish: writes the entry, keeps org.flatpak.* + appstream labels
         │
         ▼
-index/static  ──►  tunaos.org/flatpak      served by the Cloudflare Worker
+tuna-os/docs  ──►  tunaos.org/flatpak      served by the Cloudflare Worker
         │
         ▼
 enrich-index.py --check   audit: re-reads each image's labels from the registry, flags gaps
@@ -330,9 +330,9 @@ enrich-index.py --check   audit: re-reads each image's labels from the registry,
   with an "Unknown" licence and no screenshots. Run it with `--require-appstream`
   to fail instead of warn when the image has no metainfo. Then an incomplete build
   never reaches the index in the first place.
-- **Serve** — the index lives in `tuna-os/docs`, and the `tunaos-org` Cloudflare
-  Worker publishes it at `tunaos.org/flatpak/`. This repo's `index/static`
-  is a historical snapshot, not what the remote serves.
+- **Serve** — the `tunaos-org` Cloudflare Worker publishes the index at
+  `tunaos.org/flatpak/`. It serves the copy in `tuna-os/docs`. This repo keeps
+  no copy of the index.
 - **Validate** — `scripts/enrich-index.py --check` re-reads every published
   image's labels from the registry and reports any that are missing or incomplete.
   It runs daily against the live remote
