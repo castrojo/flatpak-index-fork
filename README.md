@@ -343,8 +343,14 @@ The two scripts apply the *same* label rule, but each script has its own copy.
 `update-index.py` must stay a single vendored file and cannot import `oci.py`, so
 the rule lives in both. [`tests/test_label_policy.py`](tests/test_label_policy.py)
 pins the two copies to each other. [`tests/test_publish_enrich_contract.py`](tests/test_publish_enrich_contract.py)
-runs a published entry through the auditor end to end. So a divergence or an
-incomplete entry fails in CI and does not appear as a bare app.
+runs a published entry through the auditor end to end. A divergence between the
+two copies fails in CI. The auditor repairs an incomplete entry when the registry
+has the metadata. It reports the entry as a problem when there is nothing to
+repair. That report is the daily
+[`check-metadata`](.github/workflows/check-metadata.yml) monitor on the served
+index. It opens an issue. A failure there can also mean a deploy has not
+propagated. It does not block a publish. An incomplete build reaches the index
+only when `update-index.py` runs without `--require-appstream`.
 
 ## Architecture
 
