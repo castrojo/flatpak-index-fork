@@ -345,7 +345,7 @@ the rule lives in both. [`tests/test_label_policy.py`](tests/test_label_policy.p
 pins the two copies to each other. [`tests/test_publish_enrich_contract.py`](tests/test_publish_enrich_contract.py)
 runs a published entry through the auditor end to end. A divergence between the
 two copies fails in CI, but an incomplete entry does not. `update-index.py` omits
-the entry only without `--require-appstream`, and the enrich auditor repairs it
+the entry only with `--require-appstream`, and the enrich auditor repairs it
 when the registry has the metadata and reports it as a problem otherwise.
 
 ## Architecture
