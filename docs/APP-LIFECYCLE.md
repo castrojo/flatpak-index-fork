@@ -102,9 +102,9 @@ the documented catalog. Find it three ways: a drift check fails,
 known-good served index.
 
 The `tunaos-org` Cloudflare Worker serves the production remote from `tuna-os/docs`, so a
-rollback is a change to that repository, not this one. This checkout's
-`index/static` is a reference snapshot and may itself be stale; do not treat it
-as the recovery source.
+rollback is a change to that repository, not this one. This checkout holds no
+local `index/static`, so the recovery source is the prior commit to
+`tuna-os/docs/static/flatpak/index/static`.
 
 1. Confirm the publication is bad against the registry, not only against the
    docs:
@@ -115,9 +115,14 @@ as the recovery source.
    ./scripts/enrich-index.py served-index.json --check
    ```
 
-   A non-zero result that names a digest missing labels or metadata the
-   registry no longer holds means the served index is wrong. A result that
-   flags only documentation is a drift check, not a rollback.
+   A `--check` result that prints "missing labels present in the registry"
+   shows the registry has labels the served index lacks. That is a bad
+   index. Roll back the served index.
+
+   A result that prints "could not read labels" or "image has no AppStream
+   metadata" is a registry fault. A rollback changes only the served index, so
+   it cannot fix data in the registry. A result that flags only documentation
+   is a drift check, not a rollback.
 
 2. Find the last good publication as the prior commit to
    `tuna-os/docs/static/flatpak/index/static`.
